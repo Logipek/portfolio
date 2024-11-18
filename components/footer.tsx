@@ -35,7 +35,7 @@ export default function Footer() {
               Hugo.
             </Link>
             <p className="mt-4 text-sm text-muted-foreground max-w-xs">
-              Développeur Full Stack passionné par la création d'expériences web innovantes.
+              Développeur Full Stack passionné par la création d&apos;expériences web innovantes.
             </p>
           </div>
           <div>

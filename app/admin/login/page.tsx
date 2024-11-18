@@ -19,7 +19,7 @@ export default function LoginPage() {
             Hugo. admin
           </h1>
           <p className="text-muted-foreground">
-            Connectez-vous pour accéder à l'espace administrateur
+            Connectez-vous pour accéder à l&apos;espace administrateur
           </p>
         </div>
         <Button

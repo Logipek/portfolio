@@ -91,7 +91,7 @@ export default function ContactSection() {
           toast.error(err.message)
         })
       } else {
-        toast.error("Une erreur est survenue lors de l'envoi du message")
+        toast.error("Une erreur est survenue lors de l&apos;envoi du message")
       }
     } finally {
       setLoading(false)
@@ -115,7 +115,7 @@ export default function ContactSection() {
         >
           <h2 className="text-3xl font-bold gradient-text mb-4">Contact</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Une idée de projet ? N'hésitez pas à me contacter pour en discuter.
+            Une idée de projet ? N&apos;hésitezH pas à me contacter pour en discuter.
           </p>
         </motion.div>
 

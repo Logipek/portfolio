@@ -14,14 +14,14 @@ const features = [
   },
   {
     title: "Approche créative",
-    description: "Chaque projet est une opportunité de repousser les limites de l'innovation et du design.",
+    description: "Chaque projet est une opportunité de repousser les limites de l&apos;innovation et du design.",
     icon: Brain,
     className: "md:col-span-1 md:row-span-2",
     gradient: "from-purple-500/20 to-pink-500/20"
   },
   {
     title: "Solutions sur mesure",
-    description: "Développement d'applications web adaptées à vos besoins spécifiques et à votre vision.",
+    description: "Développement d&apos;applications web adaptées à vos besoins spécifiques et à votre vision.",
     icon: Target,
     className: "md:col-span-1 md:row-span-1",
     gradient: "from-pink-500/20 to-red-500/20"
@@ -42,7 +42,7 @@ const features = [
   },
   {
     title: "Innovation continue",
-    description: "Veille technologique constante pour intégrer les meilleures pratiques du développement web et rester à la pointe de l'innovation. Participation active à la communauté open source et partage des connaissances.",
+    description: "Veille technologique constante pour intégrer les meilleures pratiques du développement web et rester à la pointe de l&apos;innovation. Participation active à la communauté open source et partage des connaissances.",
     icon: Rocket,
     className: "md:col-span-4",
     gradient: "from-cyan-500/20 to-blue-500/20"
@@ -87,8 +87,8 @@ export default function AboutSection() {
         >
           <h2 className="text-3xl font-bold gradient-text mb-4">À propos de moi</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Développeur passionné avec plus de 5 ans d'expérience dans la création d'applications web modernes et performantes.
-            Je m'efforce constamment d'améliorer mes compétences pour offrir les meilleures solutions à mes clients.
+            Développeur passionné avec plus de 5 ans d&apos;expérience dans la création d&apos;applications web modernes et performantes.
+            Je m&apos;efforce constamment d&apos;améliorer mes compétences pour offrir les meilleures solutions à mes clients.
           </p>
         </motion.div>
 
@@ -131,8 +131,8 @@ export default function AboutSection() {
         >
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Mon objectif est de créer des expériences web exceptionnelles qui combinent design innovant, 
-            performance technique et facilité d'utilisation. Chaque projet est une nouvelle opportunité 
-            d'apprendre et de repousser les limites de ce qui est possible sur le web.
+            performance technique et facilité d&apos;utilisation. Chaque projet est une nouvelle opportunité
+            d&apos;apprendre et de repousser les limites de ce qui est possible sur le web.
           </p>
         </motion.div>
       </div>
