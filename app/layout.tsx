@@ -44,6 +44,7 @@ export default function RootLayout({
               <main className="relative">{children}</main>
             </div>
           </div>
+          <Analytics/>
         </ThemeProvider>
       </body>
     </html>
