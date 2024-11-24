@@ -6,8 +6,6 @@
 // ||                                         ||
 // #############################################
 
-
-
 // import { create } from 'zustand'
 // import { persist } from 'zustand/middleware'
 
@@ -16,7 +14,7 @@
 // interface I18nStore {
 //   language: Language
 //   translations: typeof defaultTranslations
-//   setLanguage: (lang: Language) => void
+//   setLanguage: (lang: Language) => Hugo
 //   t: (key: string) => string
 // }
 
