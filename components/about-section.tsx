@@ -156,8 +156,8 @@ export default function AboutSection() {
             Mon objectif est de créer des expériences web exceptionnelles qui
             combinent design innovant, performance technique et facilité
             d&apos;utilisation. Chaque projet est une nouvelle opportunité
-            d&apos;apprendre et de repousser les limites de ce qui est possible
-            sur le web.
+            dapprendre et de repousser les limites de ce qui est possible sur le
+            web.
           </p>
         </motion.div>
       </div>
