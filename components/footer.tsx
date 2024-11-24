@@ -17,9 +17,9 @@ const footerLinks = {
     { name: "Status", href: "https://status.hugo-damion.fr" },
   ],
   legal: [
-    { name: "Politique de confidentialité", href: "#" },
-    { name: "Mentions légales", href: "#" },
-    { name: "CGU", href: "#" },
+    { name: "Politique de confidentialité", href: "/pc" },
+    { name: "Mentions légales", href: "/ml" },
+    { name: "CGU", href: "/cgu" },
   ],
   social: [
     { name: "GitHub", href: "https://github.com/Logipek" },
