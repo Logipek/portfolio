@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -66,14 +66,20 @@ const socialLinks = [
   },
 ];
 
-export default function ContactSection() {
+function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
+    honeypot: "",
   });
+  const [timestamp, setTimestamp] = useState(0);
+
+  useEffect(() => {
+    setTimestamp(Date.now());
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,7 +91,11 @@ export default function ContactSection() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(validatedData),
+        body: JSON.stringify({
+          ...validatedData,
+          honeypot: formData.honeypot,
+          timestamp,
+        }),
       });
 
       const data = await response.json();
@@ -97,7 +107,14 @@ export default function ContactSection() {
       toast.success(
         "Message envoyé avec succès! Je vous répondrai dans les plus brefs délais."
       );
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+        honeypot: "",
+      });
+      setTimestamp(Date.now());
     } catch (error) {
       if (error instanceof z.ZodError) {
         error.errors.forEach((err) => {
@@ -118,6 +135,85 @@ export default function ContactSection() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="p-8 rounded-md bg-secondary/50 backdrop-blur-sm border border-primary/5"
+    >
+      <h3 className="text-xl font-semibold mb-6">Envoyez-moi un message</h3>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Honeypot field - hidden from users */}
+        <input
+          type="text"
+          name="honeypot"
+          value={formData.honeypot}
+          onChange={handleChange}
+          style={{ display: "none" }}
+          tabIndex={-1}
+          aria-hidden="true"
+        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Input
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Nom"
+              className="bg-background/50 border-primary/10 focus:border-primary"
+            />
+          </div>
+          <div className="space-y-2">
+            <Input
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email"
+              className="bg-background/50 border-primary/10 focus:border-primary"
+            />
+          </div>
+        </div>
+        <div className="space-y-2">
+          <Input
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            placeholder="Sujet"
+            className="bg-background/50 border-primary/10 focus:border-primary"
+          />
+        </div>
+        <div className="space-y-2">
+          <Textarea
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            placeholder="Message"
+            className="min-h-[150px] bg-background/50 border-primary/10 focus:border-primary"
+          />
+        </div>
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Envoi en cours...
+            </>
+          ) : (
+            <>
+              Envoyer le message
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </>
+          )}
+        </Button>
+      </form>
+    </motion.div>
+  );
+}
+
+export default function ContactSection() {
   return (
     <section className="py-24 relative">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -193,71 +289,7 @@ export default function ContactSection() {
             </motion.div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="p-8 rounded-md bg-secondary/50 backdrop-blur-sm border border-primary/5"
-          >
-            <h3 className="text-xl font-semibold mb-6">
-              Envoyez-moi un message
-            </h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Input
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Nom"
-                    className="bg-background/50 border-primary/10 focus:border-primary"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Input
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                    className="bg-background/50 border-primary/10 focus:border-primary"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Input
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  placeholder="Sujet"
-                  className="bg-background/50 border-primary/10 focus:border-primary"
-                />
-              </div>
-              <div className="space-y-2">
-                <Textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Message"
-                  className="min-h-[150px] bg-background/50 border-primary/10 focus:border-primary"
-                />
-              </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Envoi en cours...
-                  </>
-                ) : (
-                  <>
-                    Envoyer le message
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </>
-                )}
-              </Button>
-            </form>
-          </motion.div>
+          <ContactForm />
         </div>
       </div>
     </section>

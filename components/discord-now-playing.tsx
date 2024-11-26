@@ -137,9 +137,9 @@ export default function DiscordNowPlaying() {
         </div>
 
         <div className="flex-shrink-0 flex space-x-1">
-          <span className="w-1 h-3 bg-primary rounded-full animate-music-bar" />
-          <span className="w-1 h-3 bg-primary rounded-full animate-music-bar [animation-delay:0.2s]" />
-          <span className="w-1 h-3 bg-primary rounded-full animate-music-bar [animation-delay:0.4s]" />
+          <span className="w-1 h-3 bg-primary rounded-full animate-music-bar [animation-delay:0.5s]" />
+          <span className="w-1 h-3 bg-primary rounded-full animate-music-bar [animation-delay:1s]" />
+          <span className="w-1 h-3 bg-primary rounded-full animate-music-bar [animation-delay:2s]" />
         </div>
       </motion.a>
     </AnimatePresence>
