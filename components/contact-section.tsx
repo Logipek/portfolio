@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -86,23 +86,6 @@ const socialLinks = [
   },
 ];
 
-async function generateToken(email: string): Promise<string> {
-  const timestamp = Math.floor(Date.now() / (30 * 1000)); // Change toutes les 30 secondes
-  const data = `${email}-${timestamp}-${
-    process.env.NEXT_PUBLIC_SITE_KEY || "default-key"
-  }`;
-
-  const encoder = new TextEncoder();
-  const buffer = encoder.encode(data);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-
-  return hashHex;
-}
-
 function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -118,15 +101,11 @@ function ContactForm() {
 
     try {
       const validatedData = contactSchema.parse(formData);
-      const token = await generateToken(validatedData.email);
 
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...validatedData,
-          token,
-        }),
+        body: JSON.stringify(validatedData),
       });
 
       const data = await response.json();

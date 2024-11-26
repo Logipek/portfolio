@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getRateLimiter, getClientIdentifier } from "@/lib/rate-limit";
+import { headers } from "next/headers";
 
 const contactSchema = z.object({
   name: z
@@ -29,20 +29,56 @@ const contactSchema = z.object({
     .min(10, "Le message doit contenir au moins 10 caractères")
     .max(5000, "Le message est trop long")
     .regex(/^[^<>{}]*$/, "Le message contient des caractères non autorisés"),
-
-  token: z.string(),
 });
+
+// Store for rate limiting
+const requestStore = new Map<string, number[]>();
+
+function isRateLimited(identifier: string): boolean {
+  const now = Date.now();
+  const windowMs = 60 * 1000; // 1 minute window
+  const maxRequests = 3; // Max requests per window
+
+  // Get or initialize request timestamps for this identifier
+  let requests = requestStore.get(identifier) || [];
+
+  // Remove timestamps outside current window
+  requests = requests.filter((timestamp) => now - timestamp < windowMs);
+
+  // Check if rate limit is exceeded
+  if (requests.length >= maxRequests) {
+    return true;
+  }
+
+  // Add new timestamp and update store
+  requests.push(now);
+  requestStore.set(identifier, requests);
+
+  return false;
+}
+
+function getRemainingTime(identifier: string): number {
+  const requests = requestStore.get(identifier) || [];
+  if (requests.length === 0) return 0;
+
+  const windowMs = 60 * 1000;
+  const oldestRequest = Math.min(...requests);
+  const timeUntilReset = oldestRequest + windowMs - Date.now();
+
+  return Math.max(0, timeUntilReset);
+}
 
 export async function POST(request: Request) {
   try {
-    // Rate limiting check
-    const identifier = getClientIdentifier();
-    const rateLimiter = getRateLimiter();
+    // Get client info for rate limiting
+    const headersList = headers();
+    const forwarded = headersList.get("x-forwarded-for");
+    const ip = forwarded ? forwarded.split(",")[0] : "unknown";
+    const identifier = ip;
 
-    if (rateLimiter.isRateLimited(identifier)) {
-      const remainingTime = Math.ceil(
-        rateLimiter.getRemainingTime(identifier) / 1000
-      );
+    // Check rate limit
+    if (isRateLimited(identifier)) {
+      const remainingTime = Math.ceil(getRemainingTime(identifier) / 1000);
       return NextResponse.json(
         {
           error: `Trop de messages envoyés. Veuillez réessayer dans ${remainingTime} secondes.`,
@@ -62,14 +98,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, email, subject, message, token } = result.data;
-
-    // Vérification du token
-    const expectedToken = await generateToken(email);
-    if (token !== expectedToken) {
-      return NextResponse.json({ error: "Token invalide" }, { status: 400 });
-    }
-
+    const { name, email, subject, message } = result.data;
     const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
 
     if (!webhookUrl) {
@@ -100,9 +129,7 @@ export async function POST(request: Request) {
         },
         {
           name: "Informations",
-          value: `IP: ${identifier.split("-")[0]}\nNavigateur: ${
-            identifier.split("-")[1]
-          }`,
+          value: `IP: ${identifier}`,
         },
       ],
       footer: {
@@ -135,22 +162,4 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-}
-
-// Génère un token unique basé sur l'email et un timestamp
-async function generateToken(email: string): Promise<string> {
-  const timestamp = Math.floor(Date.now() / (30 * 1000)); // Change toutes les 30 secondes
-  const data = `${email}-${timestamp}-${
-    process.env.NEXTAUTH_SECRET || "default-secret"
-  }`;
-
-  const encoder = new TextEncoder();
-  const buffer = encoder.encode(data);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-
-  return hashHex;
 }
