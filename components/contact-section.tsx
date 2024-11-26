@@ -51,13 +51,13 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    value: "contact@hugodamion.com",
+    value: "hugoguttr@gmail.com",
     description: "Pour toute demande de projet ou collaboration",
   },
   {
     icon: Phone,
     title: "Téléphone",
-    value: "+33 6 12 34 56 78",
+    value: "+33 6 52 57 83 07",
     description: "Disponible en semaine de 9h à 18h",
   },
   {
@@ -71,12 +71,12 @@ const contactInfo = [
 const socialLinks = [
   {
     name: "GitHub",
-    href: "https://github.com/hugodamion",
+    href: "https://github.com/Logipek",
     icon: Github,
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/in/hugodamion",
+    href: "https://linkedin.com/in/hugo-damion",
     icon: Linkedin,
   },
   {
