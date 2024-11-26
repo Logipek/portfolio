@@ -19,25 +19,45 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
-  email: z.string().email("Email invalide"),
-  subject: z.string().min(5, "Le sujet doit contenir au moins 5 caractères"),
+  name: z
+    .string()
+    .min(2, "Le nom doit contenir au moins 2 caractères")
+    .max(100, "Le nom est trop long")
+    .regex(/^[a-zA-ZÀ-ÿ\s-]+$/, "Le nom contient des caractères non autorisés"),
+
+  email: z
+    .string()
+    .email("Email invalide")
+    .max(254, "L'email est trop long")
+    .regex(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Format d'email invalide"
+    ),
+
+  subject: z
+    .string()
+    .min(5, "Le sujet doit contenir au moins 5 caractères")
+    .max(200, "Le sujet est trop long")
+    .regex(/^[^<>{}]*$/, "Le sujet contient des caractères non autorisés"),
+
   message: z
     .string()
-    .min(10, "Le message doit contenir au moins 10 caractères"),
+    .min(10, "Le message doit contenir au moins 10 caractères")
+    .max(5000, "Le message est trop long")
+    .regex(/^[^<>{}]*$/, "Le message contient des caractères non autorisés"),
 });
 
 const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    value: "hugoguttr@gmail.com",
+    value: "contact@hugodamion.com",
     description: "Pour toute demande de projet ou collaboration",
   },
   {
     icon: Phone,
     title: "Téléphone",
-    value: "+33 6 52 57 83 07",
+    value: "+33 6 12 34 56 78",
     description: "Disponible en semaine de 9h à 18h",
   },
   {
@@ -51,12 +71,12 @@ const contactInfo = [
 const socialLinks = [
   {
     name: "GitHub",
-    href: "https://github.com/Logipek",
+    href: "https://github.com/hugodamion",
     icon: Github,
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/in/hugo-damion",
+    href: "https://linkedin.com/in/hugodamion",
     icon: Linkedin,
   },
   {
@@ -66,6 +86,23 @@ const socialLinks = [
   },
 ];
 
+async function generateToken(email: string): Promise<string> {
+  const timestamp = Math.floor(Date.now() / (30 * 1000)); // Change toutes les 30 secondes
+  const data = `${email}-${timestamp}-${
+    process.env.NEXT_PUBLIC_SITE_KEY || "default-key"
+  }`;
+
+  const encoder = new TextEncoder();
+  const buffer = encoder.encode(data);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  return hashHex;
+}
+
 function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -73,13 +110,7 @@ function ContactForm() {
     email: "",
     subject: "",
     message: "",
-    honeypot: "",
   });
-  const [timestamp, setTimestamp] = useState(0);
-
-  useEffect(() => {
-    setTimestamp(Date.now());
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,41 +118,43 @@ function ContactForm() {
 
     try {
       const validatedData = contactSchema.parse(formData);
+      const token = await generateToken(validatedData.email);
 
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...validatedData,
-          honeypot: formData.honeypot,
-          timestamp,
+          token,
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error(
+            `Trop de messages envoyés. Veuillez réessayer dans ${data.remainingTime} secondes.`
+          );
+        }
         throw new Error(data.error || "Une erreur est survenue");
       }
 
       toast.success(
         "Message envoyé avec succès! Je vous répondrai dans les plus brefs délais."
       );
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-        honeypot: "",
-      });
-      setTimestamp(Date.now());
+      setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       if (error instanceof z.ZodError) {
         error.errors.forEach((err) => {
           toast.error(err.message);
         });
       } else {
-        toast.error("Une erreur est survenue lors de l'envoi du message");
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : "Une erreur est survenue lors de l'envoi du message"
+        );
       }
     } finally {
       setLoading(false);
@@ -145,17 +178,6 @@ function ContactForm() {
     >
       <h3 className="text-xl font-semibold mb-6">Envoyez-moi un message</h3>
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Honeypot field - hidden from users */}
-        <input
-          type="text"
-          name="honeypot"
-          value={formData.honeypot}
-          onChange={handleChange}
-          style={{ display: "none" }}
-          tabIndex={-1}
-          aria-hidden="true"
-        />
-
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Input
@@ -164,6 +186,7 @@ function ContactForm() {
               onChange={handleChange}
               placeholder="Nom"
               className="bg-background/50 border-primary/10 focus:border-primary"
+              maxLength={100}
             />
           </div>
           <div className="space-y-2">
@@ -174,6 +197,7 @@ function ContactForm() {
               onChange={handleChange}
               placeholder="Email"
               className="bg-background/50 border-primary/10 focus:border-primary"
+              maxLength={254}
             />
           </div>
         </div>
@@ -184,6 +208,7 @@ function ContactForm() {
             onChange={handleChange}
             placeholder="Sujet"
             className="bg-background/50 border-primary/10 focus:border-primary"
+            maxLength={200}
           />
         </div>
         <div className="space-y-2">
@@ -193,6 +218,7 @@ function ContactForm() {
             onChange={handleChange}
             placeholder="Message"
             className="min-h-[150px] bg-background/50 border-primary/10 focus:border-primary"
+            maxLength={5000}
           />
         </div>
         <Button type="submit" className="w-full" disabled={loading}>
