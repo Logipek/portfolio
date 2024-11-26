@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M40 80V160C40 171.046 48.9543 180 60 180H180C191.046 180 200 171.046 200 160V80C200 68.9543 191.046 60 180 60H60C48.9543 60 40 68.9543 40 80Z" stroke="rgb(99, 179, 237)" stroke-width="8"/>
-  <path d="M90 100L70 120L90 140M150 100L170 120L150 140M130 100L110 140" stroke="rgb(99, 179, 237)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
