@@ -51,7 +51,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    value: "hugoguttr@gmail.com",
+    value: "contact@hugo-damion.fr",
     description: "Pour toute demande de projet ou collaboration",
   },
   {
