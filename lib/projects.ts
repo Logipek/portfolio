@@ -60,6 +60,96 @@ export const projects = [
       "Personnalisation des paramètres de sécurité"
     ],
     implementation: `Le bot Aroah utilise la bibliothèque Eris pour une optimisation maximale des performances sur Discord. Les systèmes de sécurité, comme l'anti-raid et l'anti-spam, sont conçus pour détecter et bloquer automatiquement les comportements malveillants. Les logs détaillés permettent aux administrateurs de suivre les actions en temps réel. Le projet met l'accent sur l'efficacité et la simplicité d'utilisation pour les administrateurs de serveurs.`
+  },
+  {
+    id: 3,
+    slug: "inventory-backend",
+    title: "Inventaire de magasin",
+    description: "Application web de gestion d'inventaire conçue pour les petits commerçants, permettant de gérer efficacement les stocks, les produits et les utilisateurs..",
+    image: "/projects/inventaire-be.png",
+    technologies: ["Php", "SQL", "POO", "Docker", "Composer"],
+    githubUrl: "https://github.com/Logipek/shop-backend",
+    featured: true,
+    objectives: [
+      "Développer une solution de gestion d'inventaire complète et intuitive",
+      "Implémenter un système d'authentification robuste et sécurisé",
+      "Créer une API RESTful bien structurée et documentée",
+      "Assurer une gestion efficace des stocks et des commandes"
+    ],
+    challenges: [
+      "Conception d'une architecture MVC évolutive et maintenable",
+      "Implémentation d'un système JWT avec refresh tokens",
+      "Gestion des relations complexes entre produits et stocks",
+      "Sécurisation des données et protection contre les vulnérabilités"
+    ],
+    features: [
+      "Authentification JWT avec système de refresh tokens",
+      "Gestion multi-rôles des utilisateurs",
+      "CRUD complet pour la gestion des produits",
+      "Système d'alertes de stocks bas",
+      "Génération automatique de factures"
+    ],
+    implementation: `Le système a été développé avec PHP 8 en suivant une architecture MVC robuste. L'authentification utilise JWT pour une sécurité optimale, avec un système de refresh tokens pour une meilleure expérience utilisateur. La base de données MySQL est structurée pour garantir performance et scalabilité. Le projet utilise Composer pour la gestion des dépendances et intègre des variables d'environnement pour une configuration flexible. La sécurité est renforcée par le hashage BCrypt des mots de passe et une validation rigoureuse des données.`
+  },
+  {
+    id: 4,
+    slug: "todo-mvc",
+    title: "Todo List MVC",
+    description: "Une application moderne et intuitive de gestion de tâches construite avec JavaScript vanilla, suivant le pattern MVC et utilisant Webpack pour une expérience utilisateur optimale.",
+    image: "/projects/todo-mvc.png",
+    technologies: ["JavaScript", "Webpack", "TailwindCSS", "MVC", "LocalStorage"],
+    githubUrl: "https://github.com/Logipek/TodoList-NodeJs",
+    featured: true,
+    objectives: [
+      "Créer une application de gestion de tâches moderne et intuitive",
+      "Implémenter le pattern MVC avec JavaScript vanilla",
+      "Offrir une expérience utilisateur riche avec plusieurs vues",
+      "Démontrer les bonnes pratiques de développement front-end"
+    ],
+    challenges: [
+      "Mise en place d'une architecture MVC maintenable",
+      "Implémentation du drag & drop dans la vue Kanban",
+      "Gestion du state local avec localStorage",
+      "Création d'une interface responsive inspirée de shadcn/ui"
+    ],
+    features: [
+      "Interface moderne avec thème clair/sombre",
+      "Vues multiples (liste, Kanban avec drag & drop, calendrier)",
+      "Filtrage avancé et recherche en temps réel",
+      "Catégories personnalisables",
+      "Persistance des données via localStorage"
+    ],
+    implementation: `L'application a été développée en JavaScript vanilla en suivant strictement le pattern MVC. Webpack est utilisé pour le bundling et l'optimisation des ressources. L'interface utilisateur est construite avec TailwindCSS et inspirée de shadcn/ui pour un design moderne et cohérent. La gestion des données est assurée par localStorage avec une structure optimisée. Le projet intègre FullCalendar pour la vue calendrier et implémente un système de drag & drop personnalisé pour la vue Kanban.`
+  },
+  {
+    id: 5,
+    slug: "pathfinding",
+    title: "Algorithme de Pathfinding",
+    description: "Implémentation en C d'un algorithme de recherche du plus court chemin dans un graphe. Projet développé dans le cadre de la formation Coda pour démontrer la maîtrise des algorithmes de pathfinding.",
+    image: "/projects/pathfinding.png",
+    technologies: ["C", "Makefile", "Algorithmes", "BFS", "Dijkstra"],
+    githubUrl: "https://github.com/Logipek/Pathfinding",
+    featured: true,
+    objectives: [
+      "Implémenter un algorithme de pathfinding efficace",
+      "Créer un système de lecture et analyse de fichiers de graphe",
+      "Gérer les différents cas d'erreur et exceptions",
+      "Démontrer la maîtrise des structures de données en C"
+    ],
+    challenges: [
+      "Mise en place d'une structure de graphe optimisée en mémoire",
+      "Implémentation efficace des algorithmes BFS et Dijkstra",
+      "Gestion robuste des fichiers d'entrée et des erreurs",
+      "Optimisation des performances pour les grands graphes"
+    ],
+    features: [
+      "Lecture et analyse de fichiers de graphe",
+      "Calcul du plus court chemin entre deux nœuds",
+      "Affichage détaillé des informations du graphe",
+      "Gestion des erreurs et cas limites",
+      "Interface en ligne de commande intuitive"
+    ],
+    implementation: `Le projet a été développé en C en mettant l'accent sur la gestion efficace de la mémoire et les performances. La structure de données du graphe a été optimisée pour permettre un accès rapide aux nœuds et aux liens. Les algorithmes de pathfinding (BFS, Dijkstra) ont été implémentés de manière modulaire pour faciliter l'ajout de nouveaux algorithmes. Le projet utilise un Makefile pour automatiser la compilation et inclut une gestion robuste des erreurs.`
   }
 
 ]
