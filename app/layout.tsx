@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navigation from "@/components/navigation";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { useSmooth, useScrollRestoration } from "@/hooks/use-scroll";
 
 const inter = Inter({ subsets: ["latin"] });
