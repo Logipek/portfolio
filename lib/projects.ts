@@ -37,8 +37,7 @@ export const projects = [
     description: "Bot Discord optimisé pour la sécurité des serveurs, offrant des fonctionnalités anti-raid, anti-spam et bien plus.",
     image: "/projects/discord.webp",
     technologies: ["Eris", "Node.js", "JavaScript"],
-    demoUrl: "https://github.com/Logipek/AroahSecurityBot",
-    githubUrl: "https://github.com/Logipek/AroahSecurityBot",
+    githubUrl: "https://github.com/Logipek/Aroah_Security_Bot_Discord",
     featured: true,
     objectives: [
       "Protéger les serveurs Discord contre les attaques",
@@ -99,6 +98,7 @@ export const projects = [
     image: "/projects/todo-mvc.png",
     technologies: ["JavaScript", "Webpack", "TailwindCSS", "MVC", "LocalStorage"],
     githubUrl: "https://github.com/Logipek/TodoList-NodeJs",
+    demoUrl: "https://todolist.hugo-damion.me/",
     featured: true,
     objectives: [
       "Créer une application de gestion de tâches moderne et intuitive",
