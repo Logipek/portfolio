@@ -21,7 +21,7 @@ export default function TermsOfService() {
           limiter, les textes, images, designs, logos et codes, sont protégés
           par les lois relatives à la propriété intellectuelle et sont la
           propriété exclusive de{" "}
-          <span className="font-medium">[Votre Nom ou Entité]</span>.
+          <span className="font-medium">hugo-damion.me</span>.
         </p>
 
         <h2 className="text-xl font-semibold text-gray-800 mt-6 mb-4">
@@ -80,7 +80,7 @@ export default function TermsOfService() {
         <p className="text-gray-600 mb-4">
           Pour toute question ou réclamation concernant ces CGU, vous pouvez me
           contacter à l&apos;adresse suivante :{" "}
-          <span className="font-medium text-gray-800">hugoguttr@gmail.com</span>
+          <span className="font-medium text-gray-800">contact@hugo-damion.fr</span>
           .
         </p>
 
