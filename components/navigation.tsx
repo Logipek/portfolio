@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code2, Home, Layers, Send, Menu, X } from "lucide-react";
+import { Code2, Home, Layers, Send, Menu, X, User } from "lucide-react";
 import DiscordNowPlaying from "./discord-now-playing";
 import { ThemeSwitcher } from "./theme-switcher";
 import { Button } from "./ui/button";
@@ -17,6 +17,7 @@ export default function Navigation() {
 
   const navigation = [
     { name: "Accueil", href: "/", icon: Home },
+    { name: "A propos", href: "/about", icon: User },
     { name: "Projets", href: "/projects", icon: Code2 },
     { name: "Stack", href: "/stack", icon: Layers },
     { name: "Contact", href: "/contact", icon: Send },

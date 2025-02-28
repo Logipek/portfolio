@@ -14,9 +14,11 @@ import {
   MapPin,
   Phone,
   Loader2,
+  AlertCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
+import { Alert, AlertDescription } from "./ui/alert";
 
 const contactSchema = z.object({
   name: z
@@ -86,6 +88,10 @@ const socialLinks = [
   },
 ];
 
+type FieldErrors = {
+  [key in 'name' | 'email' | 'subject' | 'message']?: string;
+};
+
 function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -94,10 +100,42 @@ function ContactForm() {
     subject: "",
     message: "",
   });
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const [touched, setTouched] = useState<{[key: string]: boolean}>({});
+
+  const validateField = (name: string, value: string) => {
+    try {
+      const fieldSchema = contactSchema.shape[name as keyof typeof contactSchema.shape];
+      fieldSchema.parse(value);
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const message = error.errors[0]?.message || "Champ invalide";
+        setErrors(prev => ({ ...prev, [name]: message }));
+        return false;
+      }
+      return true;
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    // Valider tous les champs avant l'envoi
+    let isValid = true;
+    Object.entries(formData).forEach(([key, value]) => {
+      if (!validateField(key, value)) {
+        isValid = false;
+      }
+    });
+
+    if (!isValid) {
+      setLoading(false);
+      toast.error("Veuillez corriger les erreurs dans le formulaire");
+      return;
+    }
 
     try {
       const validatedData = contactSchema.parse(formData);
@@ -123,11 +161,18 @@ function ContactForm() {
         "Message envoyé avec succès! Je vous répondrai dans les plus brefs délais."
       );
       setFormData({ name: "", email: "", subject: "", message: "" });
+      setErrors({});
+      setTouched({});
     } catch (error) {
       if (error instanceof z.ZodError) {
+        const newErrors: FieldErrors = {};
         error.errors.forEach((err) => {
+          if (err.path[0]) {
+            newErrors[err.path[0] as keyof FieldErrors] = err.message;
+          }
           toast.error(err.message);
         });
+        setErrors(newErrors);
       } else {
         toast.error(
           error instanceof Error
@@ -145,6 +190,19 @@ function ContactForm() {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    
+    // Valider le champ si déjà touché
+    if (touched[name]) {
+      validateField(name, value);
+    }
+  };
+
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setTouched(prev => ({ ...prev, [name]: true }));
+    validateField(name, value);
   };
 
   return (
@@ -163,10 +221,25 @@ function ContactForm() {
               name="name"
               value={formData.name}
               onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Nom"
-              className="bg-background/50 border-primary/10 focus:border-primary"
+              className={`bg-background/50 border-primary/10 focus:border-primary ${
+                errors.name && touched.name ? "border-destructive" : ""
+              }`}
               maxLength={100}
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? "name-error" : undefined}
             />
+            {errors.name && touched.name && (
+              <Alert variant="destructive" className="py-2 px-3">
+                <div className="flex items-center">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription id="name-error" className="text-xs ml-2">
+                    {errors.name}
+                  </AlertDescription>
+                </div>
+              </Alert>
+            )}
           </div>
           <div className="space-y-2">
             <Input
@@ -174,10 +247,25 @@ function ContactForm() {
               type="email"
               value={formData.email}
               onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Email"
-              className="bg-background/50 border-primary/10 focus:border-primary"
+              className={`bg-background/50 border-primary/10 focus:border-primary ${
+                errors.email && touched.email ? "border-destructive" : ""
+              }`}
               maxLength={254}
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? "email-error" : undefined}
             />
+            {errors.email && touched.email && (
+            <Alert variant="destructive" className="py-2 px-3">
+              <div className="flex items-center">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription id="email-error" className="text-xs ml-2">
+                  {errors.email}
+                </AlertDescription>
+              </div>
+            </Alert>
+          )}  
           </div>
         </div>
         <div className="space-y-2">
@@ -185,20 +273,53 @@ function ContactForm() {
             name="subject"
             value={formData.subject}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="Sujet"
-            className="bg-background/50 border-primary/10 focus:border-primary"
+            className={`bg-background/50 border-primary/10 focus:border-primary ${
+              errors.subject && touched.subject ? "border-destructive" : ""
+            }`}
             maxLength={200}
+            aria-invalid={!!errors.subject}
+            aria-describedby={errors.subject ? "subject-error" : undefined}
           />
+          {errors.subject && touched.subject && (
+          <Alert variant="destructive" className="py-2 px-3">
+            <div className="flex items-center">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription id="subject-error" className="text-xs ml-2">
+                {errors.subject}
+              </AlertDescription>
+            </div>
+          </Alert>
+        )}
         </div>
         <div className="space-y-2">
           <Textarea
             name="message"
             value={formData.message}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="Message"
-            className="min-h-[150px] bg-background/50 border-primary/10 focus:border-primary"
+            className={`min-h-[150px] bg-background/50 border-primary/10 focus:border-primary ${
+              errors.message && touched.message ? "border-destructive" : ""
+            }`}
             maxLength={5000}
+            aria-invalid={!!errors.message}
+            aria-describedby={errors.message ? "message-error" : undefined}
           />
+          {errors.message && touched.message && (
+          <Alert variant="destructive" className="py-2 px-3">
+            <div className="flex items-center">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription id="message-error" className="text-xs ml-2">
+                {errors.message}
+              </AlertDescription>
+            </div>
+          </Alert>
+        )}
+          <div className="text-xs text-muted-foreground text-right">
+            {formData.message.length}/5000 caractères
+          </div>
         </div>
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? (
@@ -231,7 +352,7 @@ export default function ContactSection() {
         >
           <h2 className="text-3xl font-bold gradient-text mb-4">Contact</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Une idée de projet ? N hésitez pas à me contacter pour en discuter.
+            Une idée de projet ? N'hésitez pas à me contacter pour en discuter.
           </p>
         </motion.div>
 
