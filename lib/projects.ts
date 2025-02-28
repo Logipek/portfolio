@@ -9,6 +9,7 @@ export const projects = [
     demoUrl: "https://hugo-damion.me",
     githubUrl: "https://github.com/Logipek/personnal-portfolio",
     featured: true,
+    status: "completed",
     objectives: [
       "Créer une vitrine professionnelle moderne et interactive",
       "Démontrer mes compétences en développement front-end",
@@ -39,6 +40,7 @@ export const projects = [
     technologies: ["Eris", "Node.js", "JavaScript"],
     githubUrl: "https://github.com/Logipek/Aroah_Security_Bot_Discord",
     featured: true,
+    status: "completed",
     objectives: [
       "Protéger les serveurs Discord contre les attaques",
       "Offrir des outils anti-raid et anti-spam performants",
@@ -69,6 +71,7 @@ export const projects = [
     technologies: ["Php", "SQL", "POO", "Docker", "Composer"],
     githubUrl: "https://github.com/Logipek/shop-backend",
     featured: true,
+    status: "completed",
     objectives: [
       "Développer une solution de gestion d'inventaire complète et intuitive",
       "Implémenter un système d'authentification robuste et sécurisé",
@@ -100,6 +103,7 @@ export const projects = [
     githubUrl: "https://github.com/Logipek/TodoList-NodeJs",
     demoUrl: "https://todolist.hugo-damion.me/",
     featured: true,
+    status: "completed",
     objectives: [
       "Créer une application de gestion de tâches moderne et intuitive",
       "Implémenter le pattern MVC avec JavaScript vanilla",
@@ -128,10 +132,41 @@ export const projects = [
     description: "Implémentation en C d'un algorithme de recherche du plus court chemin dans un graphe. Projet développé dans le cadre de la formation Coda pour démontrer la maîtrise des algorithmes de pathfinding.",
     image: "/projects/pathfinding.png",
     technologies: ["C", "Makefile", "Algorithmes", "BFS", "Dijkstra"],
-    githubUrl: "https://github.com/Logipek/Pathfinding",
+    githubUrl: "https://github.com/mtkuwav/Javamon",
     featured: true,
+    status: "completed",
     objectives: [
       "Implémenter un algorithme de pathfinding efficace",
+      "Créer un système de lecture et analyse de fichiers de graphe",
+      "Gérer les différents cas d'erreur et exceptions",
+      "Démontrer la maîtrise des structures de données en C"
+    ],
+    challenges: [
+      "Mise en place d'une structure de graphe optimisée en mémoire",
+      "Implémentation efficace des algorithmes BFS et Dijkstra",
+      "Gestion robuste des fichiers d'entrée et des erreurs",
+      "Optimisation des performances pour les grands graphes"
+    ],
+    features: [
+      "Lecture et analyse de fichiers de graphe",
+      "Calcul du plus court chemin entre deux nœuds",
+      "Affichage détaillé des informations du graphe",
+      "Gestion des erreurs et cas limites",
+      "Interface en ligne de commande intuitive"
+    ],
+    implementation: `Le projet a été développé en C en mettant l'accent sur la gestion efficace de la mémoire et les performances. La structure de données du graphe a été optimisée pour permettre un accès rapide aux nœuds et aux liens. Les algorithmes de pathfinding (BFS, Dijkstra) ont été implémentés de manière modulaire pour faciliter l'ajout de nouveaux algorithmes. Le projet utilise un Makefile pour automatiser la compilation et inclut une gestion robuste des erreurs.`
+  },
+  {
+    id: 5,
+    slug: "Pokemon Java",
+    title: "Pokemon Java",
+    description: "Création d'un jeu de type RPG en Java avec JavaFX pour la partie graphique et un système de combat basique réalisé en Java.",
+    image: "/projects/pokemon.jpg",
+    technologies: ["Java", "JavaFX", "Algorithmes"],
+    githubUrl: "https://github.com/Logipek/PokemonJava",
+    featured: false,
+    status: "in_progress",
+    objectives: [
       "Créer un système de lecture et analyse de fichiers de graphe",
       "Gérer les différents cas d'erreur et exceptions",
       "Démontrer la maîtrise des structures de données en C"
