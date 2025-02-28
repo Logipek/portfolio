@@ -352,7 +352,7 @@ export default function ContactSection() {
         >
           <h2 className="text-3xl font-bold gradient-text mb-4">Contact</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Une idée de projet ? N'hésitez pas à me contacter pour en discuter.
+            Une idée de projet ? N&apos;hésitez pas à me contacter pour en discuter.
           </p>
         </motion.div>
 

@@ -21,15 +21,15 @@ export default function AboutPage() {
         <div className="space-y-8">
           <h2 className="text-3xl font-semibold">Qui suis-je?</h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Je suis un développeur passionné par la création d'applications web modernes et performantes.
-            Avec plusieurs années d'expérience dans le développement front-end et back-end, je m'efforce
+            Je suis un développeur passionné par la création d&apos;applications web modernes et performantes.
+            Avec plusieurs années d&apos;expérience dans le développement front-end et back-end, je m&apos;efforce
             de créer des expériences utilisateur exceptionnelles.
           </p>
           
           <h2 className="text-3xl font-semibold mt-10">Mon parcours</h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Mon voyage dans le monde du développement a commencé quand j'avais 13 ans, j'ai créé
-            mon premier site web. Depuis, j'ai travaillé sur divers projets, allant des applications web
+            Mon voyage dans le monde du développement a commencé quand j&apos;avais 13 ans, j&apos;ai créé
+            mon premier site web. Depuis, j&apos;ai travaillé sur divers projets, allant des applications web
             aux solutions e-commerce, en passant par des plateformes éducatives.
           </p>
         </div>
