@@ -1,4 +1,22 @@
-export const projects = [
+// Définition du type Project
+export interface Project {
+  id: number;
+  slug: string;
+  title: string;
+  description: string;
+  image: string;
+  technologies: string[];
+  demoUrl?: string;
+  githubUrl: string;
+  featured: boolean;
+  status: "completed" | "in_progress";
+  objectives: string[];
+  challenges: string[];
+  features: string[];
+  implementation: string;
+}
+
+export const projects: Project[] = [
   {
     id: 1,
     slug: "portfolio-nextjs",
@@ -157,7 +175,7 @@ export const projects = [
     implementation: `Le projet a été développé en C en mettant l'accent sur la gestion efficace de la mémoire et les performances. La structure de données du graphe a été optimisée pour permettre un accès rapide aux nœuds et aux liens. Les algorithmes de pathfinding (BFS, Dijkstra) ont été implémentés de manière modulaire pour faciliter l'ajout de nouveaux algorithmes. Le projet utilise un Makefile pour automatiser la compilation et inclut une gestion robuste des erreurs.`
   },
   {
-    id: 5,
+    id: 6,
     slug: "Pokemon Java",
     title: "Pokemon Java",
     description: "Création d'un jeu de type RPG en Java avec JavaFX pour la partie graphique et un système de combat basique réalisé en Java.",
@@ -186,5 +204,4 @@ export const projects = [
     ],
     implementation: `Le projet a été développé en C en mettant l'accent sur la gestion efficace de la mémoire et les performances. La structure de données du graphe a été optimisée pour permettre un accès rapide aux nœuds et aux liens. Les algorithmes de pathfinding (BFS, Dijkstra) ont été implémentés de manière modulaire pour faciliter l'ajout de nouveaux algorithmes. Le projet utilise un Makefile pour automatiser la compilation et inclut une gestion robuste des erreurs.`
   }
-
 ]

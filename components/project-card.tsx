@@ -6,19 +6,7 @@ import { Button } from './ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useToast } from '@/hooks/use-toast'
-
-interface Project {
-  id: number
-  slug: string
-  title: string
-  description: string
-  image: string
-  technologies: string[]
-  demoUrl?: string
-  githubUrl: string
-  featured: boolean
-  status: "completed" | "in_progress"
-}
+import { Project } from '@/lib/projects'
 
 interface ProjectCardProps {
   project: Project
@@ -55,7 +43,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         />
         {project.featured && (
           <span className="absolute top-2 right-2 px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-white backdrop-blur-sm">
-            A la une 
+            A la une
           </span>
         )}
         {project.status === "in_progress" && (
