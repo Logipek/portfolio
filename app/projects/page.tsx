@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import GithubRepos from '@/components/github-repos'
 import ProjectCard from '@/components/project-card'
 import { projects } from '@/lib/projects'
+import { Button } from '@/components/ui/button'
+import { ExternalLink } from 'lucide-react'
 
 export default function ProjectsPage() {
   return (
@@ -36,10 +38,27 @@ export default function ProjectsPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, index) => (
+            {projects.slice(0, 3).map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-12 text-center"
+          >
+            <a href="https://doc.hugo-damion.me" target="_blank" rel="noopener noreferrer">
+              <Button className="group bg-gray-100 text-black hover:bg-gray-200 mb-4" size="lg">
+                Voir tous mes projets
+                <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </a>
+            <p className="text-sm text-muted-foreground mt-2">
+              Consultez ma documentation complète sur doc.hugo-damion.me
+            </p>
+          </motion.div>
         </section>
 
         <section>
