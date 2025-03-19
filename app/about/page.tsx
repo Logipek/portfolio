@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="container max-w-6xl mx-auto py-16 space-y-20 mt-20">
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div className="space-y-8">
           <h2 className="text-3xl font-semibold">Qui suis-je?</h2>
@@ -25,7 +25,7 @@ export default function AboutPage() {
             Avec plusieurs années d&apos;expérience dans le développement front-end et back-end, je m&apos;efforce
             de créer des expériences utilisateur exceptionnelles.
           </p>
-          
+
           <h2 className="text-3xl font-semibold mt-10">Mon parcours</h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             Mon voyage dans le monde du développement a commencé quand j&apos;avais 13 ans, j&apos;ai créé
@@ -33,10 +33,10 @@ export default function AboutPage() {
             aux solutions e-commerce, en passant par des plateformes éducatives.
           </p>
         </div>
-        
+
         <div className="relative h-[450px] rounded-xl overflow-hidden shadow-xl mx-auto w-full max-w-md transform hover:scale-[1.02] transition-transform duration-300">
-          <Image 
-            src="/profile.png" 
+          <Image
+            src="/profile.png"
             alt="Photo de profil"
             fill
             className="object-cover"
@@ -44,29 +44,29 @@ export default function AboutPage() {
           />
         </div>
       </div>
-      
+
       <section className="py-16 bg-muted/30 rounded-2xl p-8">
         <StatsSection />
       </section>
-      
+
       <section className="py-16">
         <h2 className="text-3xl font-semibold mb-12 text-center">Mes valeurs</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          <ValueCard 
-            title="Qualité" 
-            description="Je m'engage à produire un code propre, maintenable et performant pour chaque projet." 
+          <ValueCard
+            title="Qualité"
+            description="Je m'engage à produire un code propre, maintenable et performant pour chaque projet."
           />
-          <ValueCard 
-            title="Innovation" 
-            description="Je reste constamment à jour avec les dernières technologies et meilleures pratiques." 
+          <ValueCard
+            title="Innovation"
+            description="Je reste constamment à jour avec les dernières technologies et meilleures pratiques."
           />
-          <ValueCard 
-            title="Communication" 
-            description="Je crois en une communication claire et transparente tout au long du processus de développement." 
+          <ValueCard
+            title="Communication"
+            description="Je crois en une communication claire et transparente tout au long du processus de développement."
           />
         </div>
       </section>
-      
+
       {/* <section className="py-16 bg-muted/30 rounded-2xl p-8">
         <h2 className="text-3xl font-semibold mb-12 text-center">Mes compétences</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
@@ -80,22 +80,22 @@ export default function AboutPage() {
           <SkillCard name="AWS" level={60} />
         </div>
       </section> */}
-      
+
       <section className="py-16 bg-muted/30 rounded-2xl p-8">
         <h2 className="text-3xl font-semibold mb-12 text-center">Expérience professionnelle</h2>
         <ExperienceTimeline />
       </section>
-      
+
       <section className="">
         <h2 className="text-3xl font-semibold mb-12 text-center">Ce que disent mes clients</h2>
         <Testimonials />
       </section>
-      
+
       <section className="py-16 bg-muted/30 rounded-2xl p-8">
         <h2 className="text-3xl font-semibold mb-12 text-center">Formation</h2>
        <FormationSection />
       </section>
-      
+
       <section>
         <ContactSection />
       </section>
@@ -123,12 +123,12 @@ function SkillCard({ name, level }: { name: string; level: number }) {
           <span className="text-sm font-medium px-3 py-1 bg-primary/10 text-primary rounded-full">{level}%</span>
         </div>
         <div className="w-full bg-secondary rounded-full h-3">
-          <div 
-            className="bg-primary h-3 rounded-full transition-all duration-1000 ease-in-out" 
+          <div
+            className="bg-primary h-3 rounded-full transition-all duration-1000 ease-in-out"
             style={{ width: `${level}%` }}
           ></div>
         </div>
       </CardContent>
     </Card>
   );
-} 
+}

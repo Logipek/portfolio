@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   title: "Hugo. | Developpeur Full-Stack",
   description:
     "Développeur Full Stack passionné par la création d'expériences web innovantes.",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
